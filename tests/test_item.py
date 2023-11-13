@@ -22,3 +22,14 @@ def test_class_Item(name, price, quantity, sell, expected_result):
     assert item_assert.quantity == quantity
     Item.pay_rate = 0.5
     assert item_assert.apply_discount() == sell
+
+
+def test_class_item_2():
+    item = Item("Монитор", 15000, 3)
+    Item.instantiate_from_csv("tests/items.csv")
+    assert item.name == "Монитор"
+    assert len(item.all) == 5
+    assert Item.string_to_number("6.0") == 6
+    assert Item.string_to_number("6") == 6
+    item.name = "Мегамощный телефон"
+    assert item.name == "Мегамощный"
