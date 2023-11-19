@@ -5,6 +5,7 @@ class Item:
     """
     Класс для представления товара в магазине.
     """
+
     pay_rate = 1.0
     all = []
 
@@ -21,12 +22,18 @@ class Item:
         self.quantity = quantity
         self.all.append(self)
 
+    def __str__(self) -> str:
+        return self.__name
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
     @property
     def name(self) -> str:
         return self.__name
 
     @name.setter
-    def name(self, name_user: str) -> str:
+    def name(self, name_user: str) -> None:
         name = name_user
         if len(name) > 10:
             self.__name = name[0:10]
@@ -54,12 +61,12 @@ class Item:
         Инициализирует экземпляры класса используя список csv.
         """
         cls.all = []
-        with (open(filename, newline="") as csvfile):
+        with open(filename, newline="") as csvfile:
             reader = csv.DictReader(csvfile, delimiter=",")
             for line in reader:
-                name = line['name']
-                price = int(line['price'])
-                quantity = int(line['quantity'])
+                name = line["name"]
+                price = int(line["price"])
+                quantity = int(line["quantity"])
                 cls(name, price, quantity)
 
     @staticmethod
