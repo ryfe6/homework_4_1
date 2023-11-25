@@ -2,6 +2,7 @@
 import pytest
 
 from src.item import Item
+from src.phone import Phone
 
 
 @pytest.mark.parametrize(
@@ -33,3 +34,12 @@ def test_class_item_3():
     item = Item("Монитор", 15000, 3)
     assert repr(item) == "Item('Монитор', 15000, 3)"
     assert str(item) == "Монитор"
+
+
+@pytest.mark.parametrize("phone, price, quantity", [("samsung", 30000, 10), ("nokia", 10000, 5)])
+def test_class_phone(phone, price, quantity):
+    item1 = Item(phone, price, quantity)
+    phone1 = Phone("iphone se", 5000, 1, 1)
+    assert item1 + phone1 == 1 + quantity
+    with pytest.raises(ValueError):
+        item1 + 1
