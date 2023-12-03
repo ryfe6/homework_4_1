@@ -1,6 +1,10 @@
 import csv
 
 
+class InstantiateCSVError(Exception):
+    pass
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -67,9 +71,13 @@ class Item:
         Инициализирует экземпляры класса используя список csv.
         """
         cls.all = []
+        if filename[-4:] != ".csv":
+            raise FileNotFoundError("Отсутствует файл item.csv")
         with open(filename, newline="") as csvfile:
             reader = csv.DictReader(csvfile, delimiter=",")
             for line in reader:
+                if line["name"] is None or line["price"] is None or line["quantity"] is None:
+                    raise InstantiateCSVError("Файл item.csv поврежден")
                 name = line["name"]
                 price = int(line["price"])
                 quantity = int(line["quantity"])
